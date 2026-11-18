@@ -82,3 +82,5 @@ body{background:#FBF7EC}
 [data-tr-lieu] .tf-act>div{display:inline-block!important;width:auto!important;white-space:nowrap;position:static!important;margin:0!important;padding:0!important}
 [data-tr-lieu] .tf-actions .tf-act{min-width:0}
 [data-tr-lieu] .tf-act{flex:0 0 auto!important;max-width:none!important}
+[data-tr-lieu] .tf .tf-actions{display:flex!important;flex-wrap:wrap;gap:8px;padding:0!important;margin:8px 0 0!important}
+[data-tr-lieu] .tf .tf-act{flex-direction:row!important;border:0!important;font-size:16px!important}
