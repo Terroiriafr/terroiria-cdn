@@ -79,5 +79,5 @@ body{background:#FBF7EC}
 [data-tr-lieu] .tf-pro a[data-tr-modifier]{display:inline-flex;align-items:center;min-height:44px;margin-top:12px;padding:0 18px;border-radius:999px;background:#1F5A2C;color:#FFFFFF!important;font-weight:700;text-decoration:none}
 [data-tr-lieu] .tf-pro a[data-tr-mail-lieux]{background:none!important;padding:0!important;color:#1F5A2C!important;font-weight:700;text-decoration:underline}
 @media (max-width:760px){.tl-hero-in,.tl-grid,.tl-tabs nav{padding-left:16px;padding-right:16px}[data-tr-lieu] .tf-head h1{font-size:38px!important}[data-tr-lieu] .tf-sec{padding:22px 18px!important}.tl-aside{position:static}.tl-hero-photo .tr-photo--grande img{height:220px}}
-[data-tr-lieu] .tf-act>div{display:inline;white-space:nowrap}
+[data-tr-lieu] .tf-act>div{display:inline-block!important;width:auto!important;white-space:nowrap;position:static!important;margin:0!important;padding:0!important}
 [data-tr-lieu] .tf-actions .tf-act{min-width:0}
