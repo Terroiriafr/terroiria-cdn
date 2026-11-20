@@ -84,7 +84,20 @@
     '.trh-stat{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:0' + I + ';padding:14px 16px 16px;border-radius:18px;background:#FFFFFF;box-shadow:0 0 0 1px #E6DFCB,0 10px 22px -18px rgba(29,42,32,.45);max-width:none' + I + '}',
     '.trh-ico{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:#EAF3EC;color:#1F5A2C}',
     '.trh-stat.j .trh-ico{background:#FFF4D1;color:#1D2A20}',
-    '.trh-n{display:block;font-size:32px' + I + ';line-height:1' + I + ';font-weight:800' + I + ';color:#1F5A2C' + I + ';letter-spacing:-.02em;font-variant-numeric:tabular-nums}',
+    '.trh-n{display:block;font-size:44px' + I + ';line-height:.95' + I + ';font-weight:800' + I + ';font-stretch:75%;font-variation-settings:"opsz" 96,"wdth" 75;color:#1F5A2C' + I + ';letter-spacing:-.025em;font-variant-numeric:tabular-nums;margin-top:2px}',
+    '.trh-stat{position:relative;overflow:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease;will-change:transform}',
+    '.trh-stat::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(220px circle at var(--rx,50%) var(--ry,0%),rgba(245,184,0,.22),transparent 60%);opacity:0;transition:opacity .3s ease}',
+    '.trh-stat:hover::before{opacity:1}',
+    '.trh-stat:hover{box-shadow:0 0 0 1.5px #F5B800,0 22px 34px -22px rgba(29,42,32,.55)}',
+    '.trh-stat > *{position:relative}',
+    '.trh-ico{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}',
+    '.trh-stat:hover .trh-ico{transform:translateY(-3px) rotate(-8deg) scale(1.08)}',
+    '.trh-stats.attente .trh-stat{opacity:0;transform:translateY(18px) rotate(-1.5deg)}',
+    '.trh-stats.vu .trh-stat{animation:trCarte .6s cubic-bezier(.2,1.2,.4,1) both}',
+    '.trh-stats.vu .trh-stat:nth-child(2){animation-delay:.12s}.trh-stats.vu .trh-stat:nth-child(3){animation-delay:.24s}',
+    '@keyframes trCarte{0%{opacity:0;transform:translateY(18px) rotate(-1.5deg)}100%{opacity:1;transform:none}}',
+    '.trh-n.saute{animation:trSaute .45s cubic-bezier(.3,1.6,.5,1)}',
+    '@keyframes trSaute{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}',
     '.trh-l{font-size:14px' + I + ';line-height:1.35' + I + ';color:#3F4D42' + I + '}',
     '.trh-bdg{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:999px;background:#1F5A2C;color:#FFFFFF;font:800 14px/1.2 "Bricolage Grotesque",system-ui,sans-serif;box-shadow:0 0 0 2px #F5B800;white-space:nowrap;position:relative;overflow:hidden;cursor:help;margin:4px 0 2px}',
     '.trh-bdg .trh-bi{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#F5B800;color:#1D2A20}',
@@ -95,8 +108,8 @@
     '@keyframes trTampon{0%{opacity:0;transform:scale(1.7) rotate(-10deg)}60%{opacity:1;transform:scale(.94) rotate(2deg)}100%{transform:none}}',
     '@keyframes trReflet{0%{left:-60%;opacity:1}100%{left:130%;opacity:1}}',
     '@keyframes trCoche{0%{transform:scale(.3) rotate(-30deg)}100%{transform:none}}',
-    '@media (max-width:640px){.trh-stats{grid-template-columns:1fr 1fr' + I + ';gap:10px' + I + ';margin-top:24px' + I + '}.trh-stat{padding:12px 14px 14px}.trh-stat.b{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 12px}.trh-n{font-size:28px' + I + '}.trh-ico{width:32px;height:32px;border-radius:10px}}',
-    '@media (prefers-reduced-motion:reduce){.trh-bdg.pose,.trh-bdg.pose::after,.trh-bdg.pose .trh-bi{animation:none' + I + '}}',
+    '@media (max-width:640px){.trh-stats{grid-template-columns:1fr 1fr' + I + ';gap:10px' + I + ';margin-top:24px' + I + '}.trh-stat{padding:12px 14px 14px}.trh-stat.b{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 12px}.trh-n{font-size:38px' + I + '}.trh-ico{width:32px;height:32px;border-radius:10px}}',
+    '@media (prefers-reduced-motion:reduce){.trh-bdg.pose,.trh-bdg.pose::after,.trh-bdg.pose .trh-bi,.trh-stats.vu .trh-stat,.trh-n.saute{animation:none' + I + '}.trh-stats.attente .trh-stat{opacity:1;transform:none}.trh-stat,.trh-ico{transition:none' + I + '}}',
     // 4. Info-bulles
     '.tr-bdg-info{cursor:help}',
     '#tr-bulle{position:fixed;z-index:1000;max-width:250px;padding:10px 12px;border-radius:12px;background:#1D2A20;color:#FBF7EC;font:500 13px/1.4 "Bricolage Grotesque",system-ui,sans-serif;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease}',
@@ -255,6 +268,56 @@
         } else poser();
       }
     });
+    // Police des chiffres : Bricolage Grotesque en version serrée (même famille que le reste du site)
+    if (!document.getElementById('tr-police-chiffres')) {
+      var lk = document.createElement('link'); lk.id = 'tr-police-chiffres'; lk.rel = 'stylesheet';
+      lk.href = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@96,75,800&display=swap';
+      document.head.appendChild(lk);
+    }
+    var calme = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nums = bloc.querySelectorAll('.trh-n');
+    // compte de « depuis » vers la valeur finale, au format français
+    function compter(el, depuis, vers, duree) {
+      if (calme) return;
+      var t0 = null, fmt = function (v) { return Math.round(v).toLocaleString('fr-FR').replace(/\u202f|\u00a0/g, ' '); };
+      var suffixe = el.getAttribute('data-trh-suffixe') || '';
+      el.classList.remove('saute');
+      (function pas(t) {
+        if (!t0) t0 = t; var k = Math.min(1, (t - t0) / duree), e = 1 - Math.pow(1 - k, 3);
+        el.textContent = fmt(depuis + (vers - depuis) * e) + suffixe;
+        if (k < 1) requestAnimationFrame(pas); else { void el.offsetWidth; el.classList.add('saute'); }
+      })(performance.now());
+    }
+    var cibles = [];
+    Array.prototype.forEach.call(nums, function (el) {
+      var fin = el.hasAttribute('data-tf-compte') ? +el.getAttribute('data-tf-compte') : 0;
+      if (!el.hasAttribute('data-tf-compte')) el.setAttribute('data-trh-suffixe', ' €');
+      cibles.push({ el: el, fin: fin, depuis: el.hasAttribute('data-tf-compte') ? 0 : 25 });
+    });
+    // Apparition en cascade quand le bloc arrive à l'écran (téléphone et ordinateur)
+    if (!calme && 'IntersectionObserver' in window) {
+      bloc.classList.add('attente');
+      var io2 = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          io2.disconnect(); bloc.classList.remove('attente'); bloc.classList.add('vu');
+          cibles.forEach(function (c) { if (!c.el.hasAttribute('data-tf-compte')) compter(c.el, c.depuis, c.fin, 1100); });
+        });
+      }, { threshold: .35 });
+      io2.observe(bloc);
+    }
+    // Survol à la souris : la carte s'incline et suit la souris, le chiffre se recompte
+    if (!calme && window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      Array.prototype.forEach.call(bloc.querySelectorAll('.trh-stat'), function (carte, i) {
+        carte.addEventListener('mouseenter', function () { var c = cibles[i]; if (c) compter(c.el, c.depuis, c.fin, 700); });
+        carte.addEventListener('mousemove', function (e) {
+          var r = carte.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          carte.style.transform = 'perspective(700px) rotateY(' + ((x - .5) * 10).toFixed(2) + 'deg) rotateX(' + (-(y - .5) * 10).toFixed(2) + 'deg) translateY(-4px)';
+          carte.style.setProperty('--rx', (x * 100) + '%'); carte.style.setProperty('--ry', (y * 100) + '%');
+        });
+        carte.addEventListener('mouseleave', function () { carte.style.transform = ''; });
+      });
+    }
   }
 
   function tout(r) { chiffres(); fleches(r); badges(r); etiquettes(r); confirmations(); }
