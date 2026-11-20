@@ -86,7 +86,9 @@
     'figure:has(>blockquote) figcaption{font-size:13.5px' + I + ';margin-top:6px' + I + '}',
     '.trm-photo{width:108px' + I + ';height:108px' + I + ';min-width:0' + I + '}',
     '.trm-ico{width:32px' + I + ';height:32px' + I + ';min-width:32px' + I + '}',
-    '.trm-ico svg{width:17px;height:17px}'
+    '.trm-ico svg{width:17px;height:17px}',
+    '.trm-bref{margin:14px 0 20px' + I + ';padding:16px' + I + '}',
+    '.trm-bref dl{gap:10px' + I + ';margin-bottom:14px' + I + ';font-size:15px' + I + '}'
   ].join('');
 
   var style = document.createElement('style');
@@ -119,6 +121,13 @@
       Array.prototype.forEach.call(document.querySelectorAll(s), function (e) { e.classList.add('trm'); });
     });
     Array.prototype.forEach.call(document.querySelectorAll('.tf-ben'), function (e) { e.parentElement.classList.add('trm'); });
+    // Page de lieu : « En bref » en haut (après « En une phrase »), et non en bas de page
+    var bref = document.querySelector('.tf-aside .tf-bref'), main = document.querySelector('.tf-main');
+    if (bref && main) {
+      var une = Array.prototype.find.call(main.children, function (c) { return /^En une phrase/.test(c.textContent.trim()); });
+      bref.classList.add('trm-bref');
+      if (une) une.parentNode.insertBefore(bref, une.nextSibling); else main.insertBefore(bref, main.firstChild);
+    }
   }
 
   var EXCLUS = '.trc, .trm, .tr-menu, .tr-burger, nav[aria-label="Navigation principale"], footer.tr-pied, script, style, svg';
