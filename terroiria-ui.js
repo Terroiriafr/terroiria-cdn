@@ -26,6 +26,8 @@
     '.tf-green.tr-fl .tr-fl-rond,.trq-btn--vert.tr-fl .tr-fl-rond,.trs-btn.tr-fl .tr-fl-rond{background:#FFFFFF;color:#1F5A2C}',
     '.tr-fl:hover .tr-fl-rond,.tr-fl:focus-visible .tr-fl-rond{transform:translateX(4px)}',
     '.tr-fl:active{transform:scale(.97)}',
+    // le bouton ne suit plus la souris (ancien effet « aimanté » de l'accueil) : seule la flèche bouge
+    '.tf-aimant{transform:none' + I + '}',
     // 2. Choix en liste (radios)
     '.trq-opts:has(> .trq-opt input[type=radio]),.trs-opts{gap:0' + I + ';background:#FFFFFF;border-radius:16px;box-shadow:0 2px 12px rgba(29,42,32,.10),0 0 0 1px #E6DFCB;overflow:hidden}',
     '.trq-opts > .trq-opt:has(input[type=radio]),label.trs-opt{border:0' + I + ';border-radius:0' + I + ';background:transparent;min-height:48px;margin:0' + I + ';transition:background-color .2s ease,color .2s ease}',
