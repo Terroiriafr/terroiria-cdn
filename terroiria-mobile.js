@@ -16,6 +16,7 @@
     'main h1,.tr-pg h1,.tr-ap h1,section h1,div.w-embed h1{font-size:28px' + I + ';line-height:1.12' + I + ';letter-spacing:-.02em' + I + '}',
     'h2:not(.trc h2){font-size:23px' + I + ';line-height:1.18' + I + ';letter-spacing:-.015em' + I + '}',
     'h3:not(.trc h3){font-size:18px' + I + ';line-height:1.25' + I + '}',
+    'h1 span:not(.tf-bdg):not(.tf-bdg *),h2 span:not(.tf-bdg):not(.tf-bdg *){font-size:inherit' + I + ';line-height:inherit' + I + '}',
     '.tf-eyebrow{font-size:12px' + I + ';margin-bottom:4px' + I + '}',
     // Accueil : « Comment ça marche » en lignes compactes
     '.trm-pas{gap:10px' + I + '}',
@@ -150,7 +151,7 @@
       var fs = parseFloat(cs.fontSize);
       var w = e.offsetWidth, h = e.offsetHeight;
       // Textes (les titres h1-h3 sont réglés par la feuille de style)
-      if (!/^H[1-3]$/.test(e.tagName) && fs > 16.5 && texteDirect(e)) {
+      if (!/^H[1-3]$/.test(e.tagName) && !e.closest('h1,h2,h3') && fs > 16.5 && texteDirect(e)) {
         var gros = fs >= 26;
         var nf = gros ? arrondi(Math.max(20, 14 + (fs - 16) * 0.55)) : (fs > 18.5 && parseInt(cs.fontWeight, 10) >= 700 ? 17 : 16);
         o.fs = nf + 'px';
