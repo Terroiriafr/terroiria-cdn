@@ -79,6 +79,24 @@
     '.tr-tag::before,.tf-fort::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:currentColor}',
     '.tf-fort{background:#FFF4D1' + I + ';color:#1D2A20' + I + '}',
     '.tf-fort::before{background:#F5B800}',
+    // 11. Accueil : chiffres clés en cartes + badge « Daté et sourcé »
+    '.trh-stats{display:grid' + I + ';grid-template-columns:repeat(3,minmax(0,1fr));gap:12px' + I + ';border-top:0' + I + ';padding-top:0' + I + ';margin-top:32px' + I + '}',
+    '.trh-stat{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:0' + I + ';padding:14px 16px 16px;border-radius:18px;background:#FFFFFF;box-shadow:0 0 0 1px #E6DFCB,0 10px 22px -18px rgba(29,42,32,.45);max-width:none' + I + '}',
+    '.trh-ico{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:#EAF3EC;color:#1F5A2C}',
+    '.trh-stat.j .trh-ico{background:#FFF4D1;color:#1D2A20}',
+    '.trh-n{display:block;font-size:32px' + I + ';line-height:1' + I + ';font-weight:800' + I + ';color:#1F5A2C' + I + ';letter-spacing:-.02em;font-variant-numeric:tabular-nums}',
+    '.trh-l{font-size:14px' + I + ';line-height:1.35' + I + ';color:#3F4D42' + I + '}',
+    '.trh-bdg{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:999px;background:#1F5A2C;color:#FFFFFF;font:800 14px/1.2 "Bricolage Grotesque",system-ui,sans-serif;box-shadow:0 0 0 2px #F5B800;white-space:nowrap;position:relative;overflow:hidden;cursor:help;margin:4px 0 2px}',
+    '.trh-bdg .trh-bi{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#F5B800;color:#1D2A20}',
+    '.trh-bdg::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);opacity:0}',
+    '.trh-bdg.pose{animation:trTampon .6s cubic-bezier(.2,1.4,.4,1) both}',
+    '.trh-bdg.pose::after{animation:trReflet 1s .65s ease-out both}',
+    '.trh-bdg.pose .trh-bi{animation:trCoche .5s .45s cubic-bezier(.3,1.6,.5,1) both}',
+    '@keyframes trTampon{0%{opacity:0;transform:scale(1.7) rotate(-10deg)}60%{opacity:1;transform:scale(.94) rotate(2deg)}100%{transform:none}}',
+    '@keyframes trReflet{0%{left:-60%;opacity:1}100%{left:130%;opacity:1}}',
+    '@keyframes trCoche{0%{transform:scale(.3) rotate(-30deg)}100%{transform:none}}',
+    '@media (max-width:640px){.trh-stats{grid-template-columns:1fr 1fr' + I + ';gap:10px' + I + ';margin-top:24px' + I + '}.trh-stat{padding:12px 14px 14px}.trh-stat.b{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 12px}.trh-n{font-size:28px' + I + '}.trh-ico{width:32px;height:32px;border-radius:10px}}',
+    '@media (prefers-reduced-motion:reduce){.trh-bdg.pose,.trh-bdg.pose::after,.trh-bdg.pose .trh-bi{animation:none' + I + '}}',
     // 4. Info-bulles
     '.tr-bdg-info{cursor:help}',
     '#tr-bulle{position:fixed;z-index:1000;max-width:250px;padding:10px 12px;border-radius:12px;background:#1D2A20;color:#FBF7EC;font:500 13px/1.4 "Bricolage Grotesque",system-ui,sans-serif;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease}',
@@ -200,7 +218,46 @@
     var q = document.querySelector('.trq-succes'); if (q && !vus.has(q)) { vus.add(q); notifier('Réponses envoyées', 'Merci ! Votre page est en préparation.'); }
   }
 
-  function tout(r) { fleches(r); badges(r); etiquettes(r); confirmations(); }
+
+  // 11. Accueil : chiffres clés
+  var ICO_PIN = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+  var ICO_CADEAU = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z"/></svg>';
+  var ICO_SOURCE = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M8.5 13.5l2.5 2.5 4.5-5"/></svg>';
+  function chiffres() {
+    var c = document.querySelector('[data-tf-compte]');
+    var bloc = c && c.closest('p') && c.closest('p').parentElement;
+    if (!bloc || bloc.classList.contains('trh-stats')) return;
+    var ps = Array.prototype.filter.call(bloc.children, function (x) { return x.tagName === 'P'; });
+    if (ps.length !== 3) return;
+    bloc.classList.add('trh-stats', 'trm');
+    ps.forEach(function (p, i) {
+      var sp = p.querySelectorAll('span'); if (sp.length < 2) return;
+      p.classList.add('trh-stat'); p.removeAttribute('style');
+      var n = sp[0], l = sp[1];
+      [n, l].forEach(function (x) { ['font-size', 'line-height', 'letter-spacing'].forEach(function (k) { x.style.removeProperty(k); }); });
+      l.classList.add('trh-l');
+      if (i < 2) {
+        n.classList.add('trh-n');
+        var ic = document.createElement('span'); ic.className = 'trh-ico'; ic.innerHTML = i === 0 ? ICO_PIN : ICO_CADEAU;
+        if (i === 1) p.classList.add('j');
+        p.insertBefore(ic, n);
+      } else {
+        p.classList.add('b');
+        var b = document.createElement('span');
+        b.className = 'trh-bdg'; b.setAttribute('tabindex', '0'); b.setAttribute('role', 'note');
+        b.setAttribute('data-tr-info', 'Chaque page indique quand ses infos ont été vérifiées, et d’où elles viennent (le lieu, nos visites ou des sources publiques citées).');
+        b.innerHTML = '<span class="trh-bi">' + ICO_SOURCE + '</span>Daté et sourcé';
+        p.replaceChild(b, n);
+        var poser = function () { b.classList.add('pose'); };
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { setTimeout(poser, 350); io.disconnect(); } }); }, { threshold: .6 });
+          io.observe(b);
+        } else poser();
+      }
+    });
+  }
+
+  function tout(r) { chiffres(); fleches(r); badges(r); etiquettes(r); confirmations(); }
   var attente = null; var dernier = 0;
   function plusTard() { if (attente) return; attente = setTimeout(function () { attente = null; tout(); }, 120); }
   function demarrer() {
